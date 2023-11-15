@@ -1,15 +1,13 @@
 package ru.polovtsev.search
 
-import ru.polovtsev.index.DefaultSplitter
-import ru.polovtsev.index.Indexer
-import ru.polovtsev.index.PositionedInvertedIndex
-import ru.polovtsev.index.Splitter
+import ru.polovtsev.index.*
+
+typealias TokenFilter = (String) -> String
 
 class PositionedIndexSearcher (private val splitter: Splitter = DefaultSplitter(),
-                               private val index: PositionedInvertedIndex = PositionedInvertedIndex(),
-                               val sourceData: MutableList<String> = mutableListOf()) : FullTextSearch, Indexer {
-
-
+                               val index: PositionedInvertedIndex = PositionedInvertedIndex(),
+                               val sourceData: MutableList<String> = mutableListOf(),
+                               private val tokenFilter: TokenFilter = StandardTokenFilter()) : FullTextSearch, Indexer {
 
     override fun search(word: String, searchableData: List<String>): List<String> {
         TODO("Not yet implemented")
@@ -20,33 +18,18 @@ class PositionedIndexSearcher (private val splitter: Splitter = DefaultSplitter(
     }
 
     override fun index(rawData: List<String>): MutableMap<String, MutableSet<Int>> {
-        var indexed = rawData
-        val tokens = indexed.flatMap { splitter.split(it) }.toCollection(mutableListOf())
-
-        rawData.asSequence().forEachIndexed {
-            ind, value -> {
-                val tokens = splitter.split(value)
-                tokens.forEach {
-                    if (index.notContains(it)){
-
-                    } else {
-
-                    }
-                }
-            }
-        }
-
-//        for (lines,: String in indexed) {
-//            if (index.notContains())
-//                index.populate(ind,)
-//        }
-
-        tokens.asSequence().forEachIndexed {
-            ind, value -> {
-                if (index.notContains(ind))
-                    index.populateNew(ind)
-            }
-        }
+        val data = rawData
+        val tokensWithPositionsList = data.map { splitter.split(it) }.toCollection(mutableListOf()) // [["a":2..3, "b": 5..6, "a":7..10],["b": 6..9]]
+        tokensWithPositionsList.forEachIndexed { ind, value -> value.forEach{ index.populate(tokenPreparement(it.key), ind, it.value) } }
+        return mutableMapOf()
     }
 
+    private fun tokenPreparement(token : String) : String = tokenFilter.invoke(token)
+
+    internal class StandardTokenFilter: TokenFilter{
+
+        override fun invoke(token: String): String = token.lowercase()
+
+    }
 }
+

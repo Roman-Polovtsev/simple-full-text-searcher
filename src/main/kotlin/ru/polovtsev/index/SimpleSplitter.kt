@@ -10,5 +10,8 @@ class SimpleSplitter : Splitter {
         return raw.split(DELIMITER).associateWith { TokenPosition.empty() }.toMutableMap()
     }
 
+    override fun splitWithoutPosition(raw: String): List<String> {
+        return raw.split(DELIMITER)
+    }
 
 }
