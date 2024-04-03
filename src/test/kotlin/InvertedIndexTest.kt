@@ -12,7 +12,7 @@ class InvertedIndexTest {
 
         println(searcher.sourceData)
 
-        val search = searcher.search("Hello", data)
+        val search = searcher.search("Hello")
 
         println("search = $search")
     }

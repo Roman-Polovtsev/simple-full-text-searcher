@@ -26,7 +26,7 @@ class InvertedIndexSearcher(private val splitter: Splitter = DefaultSplitter(),
             }
         }
 
-    override fun search(word: String, searchableData: List<String>): List<String> {
+    override fun search(word: String ): List<String> {
         val docs = index[word.lowercase()] ?: return listOf()
         return docs.asSequence().map { sourceData[it-1] }.toCollection(mutableListOf())
     }

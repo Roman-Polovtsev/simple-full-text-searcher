@@ -1,11 +1,18 @@
 package ru.polovtsev.search
 
+import ru.polovtsev.index.Indexer
 import java.util.Collections.unmodifiableList
 
-class SimpleSearcher : FullTextSearch {
+class SimpleSearcher(private var indexedData: List<String> =  mutableListOf()) : FullTextSearch, Indexer {
 
-    override fun search(word: String, searchableData: List<String>): List<String> {
-        val mutable = searchableData.asSequence()
+
+    override fun index(rawData: List<String>): MutableMap<String, MutableSet<Int>> {
+        indexedData = rawData
+        return rawData.asSequence().map { it to mutableSetOf<Int>() }.toMap().toMutableMap()
+    }
+
+    override fun search(word: String ): List<String> {
+        val mutable = indexedData.asSequence()
             .filter { it.contains(word, true) }
             .toCollection(mutableListOf())
         return unmodifiableList(mutable)
@@ -33,5 +40,7 @@ class SimpleSearcher : FullTextSearch {
         }
         return line to count
     }
+
+
 
 }

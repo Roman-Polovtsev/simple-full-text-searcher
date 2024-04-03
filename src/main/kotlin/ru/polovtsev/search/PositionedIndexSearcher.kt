@@ -9,7 +9,8 @@ class PositionedIndexSearcher (private val splitter: Splitter = DefaultSplitter(
                                val sourceData: MutableList<String> = mutableListOf(),
                                private val tokenFilter: TokenFilter = StandardTokenFilter()) : FullTextSearch, Indexer {
 
-    override fun search(word: String, searchableData: List<String>): List<String> {
+    override fun search(word: String ): List<String> {
+
         TODO("Not yet implemented")
     }
 

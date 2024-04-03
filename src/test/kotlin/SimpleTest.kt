@@ -8,8 +8,9 @@ class SimpleTest {
     fun test(){
         val data = StringExtractor.readArticleSet("src/test/resources/sample-data.txt")
         val searcher = SimpleSearcher()
+        searcher.index(data)
 
-        val results = searcher.search("hello", data)
+        val results = searcher.search("hello")
 
         println("results = ${results}")
     }
