@@ -1,6 +1,7 @@
 package ru.polovtsev.coroutines
 
 import kotlinx.coroutines.*
+import java.time.LocalDateTime
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -20,22 +21,24 @@ class Blocking{
 
     fun main(){
         runBlocking {
-            println("start")
+            println("start ${LocalDateTime.now()}")
             for (i in 0..10) {
                 launch {
                     exec(i)
                 }
             }
-            println("finish")
+            println("finish ")
         }
     }
 
     suspend fun exec(i: Int){
-        println("start do $i")
-//        Thread.sleep(Random.nextInt(500).toLong())
-        val delay = Random.nextInt(500).toLong()
-        delay(delay)
-        println("finsh do $i delay was $delay")
+        println("start do $i ")
+//        val delay = Random.nextInt(500).toLong()
+        val delay1 = 200L
+        Thread.sleep(delay1)
+//        delay(delay1)
+//        println("finsh do $i delay was $delay")
+        println("finish  do $i ${LocalDateTime.now()}")
     }
 }
 

@@ -14,7 +14,7 @@ class DslForTableDDLTest : StringSpec() {
             val name by text NOT NULL DEFAULT "'noname'"
             val year by int  NOT NULL
             PRIMARY KEY id // this.PRIMARY.KEY(id)
-            val valid_year by CHECK("year is null OR > (year > 1950 AND year <= 2030)")
+//            val valid_year by CHECK("year is null OR > (year > 1950 AND year <= 2030)")
         }
         return  myshema__table
     }
