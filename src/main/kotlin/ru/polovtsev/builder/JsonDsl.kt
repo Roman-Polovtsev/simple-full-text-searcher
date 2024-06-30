@@ -10,14 +10,14 @@ data class JsonArray(var array: Array<Any?> = emptyArray()): Json(){
     }
 }
 
-data class StringType(var string: String): Json() {
+data class StringType1(var string: String): Json() {
 
     override fun toString(): String {
         return string
     }
 }
 
-fun String.asJsonType() = StringType(this)
+fun String.asJsonType() = StringType1(this)
 
 
 class JsonArrayBuilder(var array: JsonArray = JsonArray()){
