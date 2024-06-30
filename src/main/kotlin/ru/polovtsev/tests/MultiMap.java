@@ -53,14 +53,13 @@ public class MultiMap {
         System.out.println(res);
 
         Stream<X> stream = Stream.of(new X("a", List.of(23)), new X("sfasf", List.of(43, 23)));
-        Predicate
-        Comparator<X> custom = new Comparator<X>() {
-            @Override public int compare(X o1, X o2) {
-
-                return o1.getValue().stream().findAny()
-            }
-        }
-        stream.sorted(Comparator.comparing())
+//        Comparator<X> custom = new Comparator<X>() {
+//            @Override public int compare(X o1, X o2) {
+//
+//                return o1.getValue().stream().findAny()
+//            }
+//        }
+//        stream.sorted(Comparator.comparing())
 
     }
 }
